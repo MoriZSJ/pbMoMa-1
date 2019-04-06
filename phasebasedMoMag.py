@@ -23,7 +23,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
     steer = Steerable(5)
     pyArr = Pyramid2arr(steer)
 
-    print "Reading:", vidFname,
+    print ("Reading:", vidFname,)
 
     # get vid properties
     vidReader = cv2.VideoCapture(vidFname)
@@ -45,14 +45,14 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
     if np.isnan(fps):
         fps = 30
 
-    print ' %d frames' % vidFrames,
-    print ' (%d x %d)' % (width, height),
-    print ' FPS:%d' % fps
+    print (' %d frames' % vidFrames,)
+    print (' (%d x %d)' % (width, height),)
+    print (' FPS:%d' % fps)
 
     # video Writer
     fourcc = func_fourcc('M', 'J', 'P', 'G')
     vidWriter = cv2.VideoWriter(vidFnameOut, fourcc, int(fps), (width,height), 1)
-    print 'Writing:', vidFnameOut
+    print ('Writing:', vidFnameOut)
 
     # how many frames
     nrFrames = min(vidFrames, maxFrames)
@@ -64,9 +64,9 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
     filter = IdealFilterWindowed(windowSize, lowFreq, highFreq, fps=fpsForBandPass, outfun=lambda x: x[0])
     #filter = ButterBandpassFilter(1, lowFreq, highFreq, fps=fpsForBandPass)
 
-    print 'FrameNr:', 
+    print ('FrameNr:', )
     for frameNr in range( nrFrames + windowSize ):
-        print frameNr,
+        print (frameNr,)
         sys.stdout.flush() 
 
         if frameNr < nrFrames:
@@ -103,7 +103,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             except StopIteration:
                 continue
 
-            print '*',
+            print ('*',)
             
             # motion magnification
             magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor
