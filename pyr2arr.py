@@ -58,11 +58,14 @@ class Pyramid2arr:
 
         # create iterator that convert array to images
         it = (np.reshape(bandArray[istart:iend], size) for (istart,iend,size) in self._indices)
-        
-        coeffs = [it.next()]
+        try:
+            coeffs = [it.__next__()]
+        except StopIteration:
+            print("End")
+            
         for lvl in self.levels:
-            coeffs.append([it.next() for band in self.bands])
-        coeffs.append(it.next())
+            coeffs.append([it.__next__() for band in self.bands])
+        coeffs.append(it.__next__())
 
         return coeffs
 
