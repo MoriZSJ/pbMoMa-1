@@ -111,8 +111,12 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             # create new array
             newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)
 
-            # create pyramid coeffs     
-            newCoeff = pyArr.a2p(newArr)
+            # create pyramid coeffs
+            try:
+                newCoeff = pyArr.a2p(newArr)
+            except StopIteration:
+                print("End")
+
             
             # reconstruct pyramid
             out = steer.reconSCFpyr(newCoeff)
@@ -122,7 +126,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             out[out<0] = 0
             
             # make a RGB image
-            rgbIm = np.empty( (out.shape[0], out.shape[1], 3 ) )
+            rgbIm = np.empty((out.shape[0], out.shape[1], 3))
             rgbIm[:,:,0] = out
             rgbIm[:,:,1] = out
             rgbIm[:,:,2] = out
@@ -144,11 +148,11 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 vidFname = 'media/guitar.mp4'
 
 # maximum nr of frames to process
-maxFrames = 60000
+maxFrames = 80000
 # the size of the sliding window
-windowSize = 30
+windowSize = 60
 # the magnifaction factor
-factor = 20
+factor = 120
 # the fps used for the bandpass
 fpsForBandPass = 600 # use -1 for input video fps
 # low ideal filter
