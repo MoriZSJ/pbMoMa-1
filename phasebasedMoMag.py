@@ -145,20 +145,20 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'media/baby.mp4';
 #vidFname = 'media/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'media/embryos01_30s.mp4'
-vidFname = 'media/guitar.mp4'
+vidFname = 'media/baby.mp4'
 
 # maximum nr of frames to process
-maxFrames = 80000
+maxFrames = 60000
 # the size of the sliding window
-windowSize = 60
+windowSize = 30
 # the magnifaction factor
-factor = 120
+factor = 10
 # the fps used for the bandpass
-fpsForBandPass = 600 # use -1 for input video fps
+fpsForBandPass = 30 # use -1 for input video fps
 # low ideal filter
-lowFreq = 72
+lowFreq = 0.4
 # high ideal filter
-highFreq = 92
+highFreq = 0.8
 # output video filename
 vidFnameOut = vidFname + '-Mag%dIdeal-lo%d-hi%d.avi' % (factor, lowFreq, highFreq)
 
