@@ -1,7 +1,9 @@
-#videos
+#videos and pdfs
 *.avi
 *.mp4
 *.MOV
+*.pdf
+
 
 
 # Byte-compiled / optimized / DLL files
