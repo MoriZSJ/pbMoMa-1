@@ -85,7 +85,7 @@ class IdealFilter (object):
             
     def __set_mask(self):
         self.frequencies = fftpack.fftfreq(self.NFFT, d=1.0/self.fps)    
-        #print("freq: " +str(self.frequencies))
+        print("freq: " +str(self.frequencies))
         # determine what indices in Fourier transform should be set to 0
         self.mask = (np.abs(self.frequencies) < self.wl) | (np.abs(self.frequencies) > self.wh) #频率范围外pixel的index
         
@@ -97,7 +97,9 @@ class IdealFilter (object):
             
         fft = fftpack.fft(data, axis=axis)        
         fft[self.mask] = 0   
-        return np.real( fftpack.ifft(fft, axis=axis) )        
+        ifft_real = np.real(fftpack.ifft(fft, axis=axis))
+        print("IFFT: "+str(ifft_real[ifft_real.nonzero()]))
+        return ifft_real        
 
 class IdealFilterWindowed (SlidingWindow):
     
