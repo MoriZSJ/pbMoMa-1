@@ -67,9 +67,9 @@ def vidCom(vid1, vid2,vidFnameOut):
 
 
 #================= main script ==================
-vid1 = 'media/eye-ud.mp4-origin.avi'
-vid2 = 'media/eye-ud.mp4-Mag300Ideal-lo0.10-hi1.00-fps100.avi'
+vid1 = 'eye/eye-ud.mp4-origin.avi'
+vid2 = 'eye/eye-ud.mp4-Mag300Ideal-lo0.10-hi1.00-fps100.avi'
 
-vidFnameOut = 'media/vidComp-'+vid2[-24:-4]+'.avi'
+vidFnameOut = 'eye/vidComp-'+vid2[-24:-4]+'.avi'
 
 vidCom(vid1, vid2,vidFnameOut)
