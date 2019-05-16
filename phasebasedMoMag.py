@@ -9,7 +9,7 @@ try:
 except ImportError:
     # OpenCV 3.x does not have cv2.cv submodule
     USE_CV2 = False
-    
+
 import sys
 import numpy as np
 
@@ -27,6 +27,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 
     # get vid properties
     vidReader = cv2.VideoCapture(vidFname)
+    #print("open: "+str(vidReader.isOpened()))
     if USE_CV2:
         # OpenCV 2.x interface
         vidFrames = int(vidReader.get(cv.CV_CAP_PROP_FRAME_COUNT))    
@@ -106,8 +107,8 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             print ('*',)
             
             # motion magnification
-            #magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor    #原始相位-滤波后相位+放大后滤波后相位
-            magnifiedPhases = filteredPhases*factor
+            magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor    #原始相位-滤波后相位+放大后滤波后相位
+            #magnifiedPhases = filteredPhases*factor
 
             # create new array
             newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)
@@ -146,23 +147,23 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'eye/baby.mp4';
 #vidFname = 'eye/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'eye/embryos01_30s.mp4'
-vidFname = 'eye/eye-cir.mp4'
+vidFname = 'eye/eye-btfy.mp4'
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
 # the size of the sliding window    #决定筛选freq的列表长度
 windowSize = 40         #30
 # the magnifaction factor
-factor = 300
+factor = 5
 # the fps used for the bandpass (use -1 for input video fps)
-fpsForBandPass = 100 #600 #筛选freq的范围:[0,fps/2] 
+fpsForBandPass = 20 #600 #筛选freq的范围:[0,fps/2] 
 # low ideal filter
 lowFreq = 0.01
 # high ideal filter
-highFreq = 0.04
+highFreq = 0.1
 # output video filename
-vidFnameOut = vidFname + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
-#vidFnameOut = vidFname + '-origin.avi'
+vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
+#vidFnameOut = vidFname[:-4] + '.avi'
 
 phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq)
 
