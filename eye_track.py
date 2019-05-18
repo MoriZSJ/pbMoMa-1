@@ -7,6 +7,9 @@ def eyeTrack(video,center):
     #check OpenCV version
     (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
     print("cv: "+str(cv2.__version__))
+    
+    # tracker_types = ['BOOSTING', 'MIL','KCF', 'TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE','CSRT']
+    # tracker_type = tracker_types[2]
     # if int(minor_ver) < 3:
     #     tracker = cv2.Tracker_create(tracker_type)
     # else:
@@ -22,10 +25,9 @@ def eyeTrack(video,center):
     #         tracker = cv2.TrackerMedianFlow_create()
 
     # Choose tracker
-    # tracker_types = ['BOOSTING', 'MIL','KCF', 'TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE','CSRT']
-    # tracker_type = tracker_types[2]
     tracker = cv2.TrackerKCF_create()   # KCF Tracker
     #tracker = cv2.TrackerGOTURN_create() # GOTURN Tracker
+
     # Exit if video not opened.
     if not video.isOpened():
         print('Could not open video') 
@@ -99,7 +101,7 @@ def eyeTrack(video,center):
     return center
 
 
-def drawPath(center):
+def drawPath(center,outPath):
     #print("center: "+str(center))
     # white background
     rows, cols = [1100,700]
@@ -116,7 +118,7 @@ def drawPath(center):
 
     cv2.imshow('PathOri', img)
     cv2.waitKey()
-    cv2.imwrite('Result/btf-1064-Ampfps10.jpg', img)
+    cv2.imwrite(outPath, img)
     
     # Image Amplification
     # img2 = cv2.imread('ori.jpg')
@@ -125,18 +127,16 @@ def drawPath(center):
     # cv2.imwrite('Scaled.jpg', imgscl)e
     # cv2.waitKey()
 
-#def imgProcess():
-
 
 
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture('eye/test.avi')
-        
+    video = cv2.VideoCapture('Post_Vid/9-lessfps.avi')
+    outPath  = 'Path/9lessfps.jpg' 
+
     #center locations
     center = []
 
     eyeTrack(video,center)
-    drawPath(center)
-    #imgProcess()
+    drawPath(center,outPath)

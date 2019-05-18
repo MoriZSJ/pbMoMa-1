@@ -53,6 +53,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
     # video Writer
     fourcc = func_fourcc('M', 'J', 'P', 'G')
     vidWriter = cv2.VideoWriter(vidFnameOut, fourcc, int(fps), (width,height), 1)
+    #slowVidWriter = cv2.VideoWriter(slowVidFnameOut, fourcc, 10, (1024,599), 1) # slow vids with fps=10
     print ('Writing:', vidFnameOut)
 
     # how many frames
@@ -136,10 +137,12 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             #write to disk
             res = cv2.convertScaleAbs(rgbIm)
             vidWriter.write(res)
+            #slowVidWriter.write(res)
 
     # free the video reader/writer
     vidReader.release()
-    vidWriter.release()   
+    vidWriter.release() 
+    #slowVidWriter.release()  
 
 
 ################# main script
@@ -147,7 +150,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'eye/baby.mp4';
 #vidFname = 'eye/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'eye/embryos01_30s.mp4'
-vidFname = 'eye/eye-btfy.mp4'
+vidFname = 'eye_Vid/eye-antisqu.mp4'
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
@@ -164,6 +167,7 @@ highFreq = 0.1
 # output video filename
 vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
 #vidFnameOut = vidFname[:-4] + '.avi'
+#slowVidFnameOut = vidFname[:-4] + '-fps10-Amp.avi'
 
 phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq)
 
