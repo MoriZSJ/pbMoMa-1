@@ -124,7 +124,7 @@ def drawPath(center,outPath):
     # img2 = cv2.imread('ori.jpg')
     # imgscl=cv2.resize(img2,(1000,1000),interpolation=cv2.INTER_CUBIC)
     # cv2.imshow('PathScaled', imgscl)
-    # cv2.imwrite('Scaled.jpg', imgscl)e
+    # cv2.imwrite('Scaled.jpg', imgscl)
     # cv2.waitKey()
 
 
@@ -132,8 +132,8 @@ def drawPath(center,outPath):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture('Post_Vid/9-lessfps.avi')
-    outPath  = 'Path/9lessfps.jpg' 
+    video = cv2.VideoCapture('test/11xihalf.avi')
+    outPath  = 'Path/11xi.jpg' 
 
     #center locations
     center = []

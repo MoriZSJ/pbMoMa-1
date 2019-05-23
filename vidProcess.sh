@@ -1,4 +1,4 @@
 ## vidProcess
 for name in ./test/*.avi; do
-  ffmpeg -r 10 -i $name -vf scale=1064:-1 ./test/test.avi
+  ffmpeg -i $name -r 25 -vf scale=1064:-1 ./test/1.avi
 done

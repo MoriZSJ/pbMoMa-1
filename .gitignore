@@ -4,7 +4,7 @@
 *.MOV
 *.pdf
 *.jpg
-
+*.png
 # large files
 *.caffemodel
 *.prototxt

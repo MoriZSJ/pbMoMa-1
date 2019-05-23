@@ -150,7 +150,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'eye/baby.mp4';
 #vidFname = 'eye/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'eye/embryos01_30s.mp4'
-vidFname = 'eye_Vid/eye-antisqu.mp4'
+vidFname = 'eye_Vid/mytriangle.mp4'
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
