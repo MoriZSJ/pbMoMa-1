@@ -28,7 +28,7 @@ def image_similarity_vectors_via_numpy(image1, image2):
     return res
  
  
-image1 = Image.open('Path/11trans.jpg')
+image1 = Image.open('Path/11tk_3amp.jpg')
 image2 = Image.open('Truth/11.jpg')
 cosin = image_similarity_vectors_via_numpy(image1, image2)
  

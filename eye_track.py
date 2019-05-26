@@ -132,8 +132,8 @@ def drawPath(center,outPath):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture('test/11xihalf.avi')
-    outPath  = 'Path/11xi.jpg' 
+    video = cv2.VideoCapture('test/11.avi')
+    outPath  = 'Path/11tk_3.jpg' 
 
     #center locations
     center = []

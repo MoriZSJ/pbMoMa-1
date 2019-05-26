@@ -17,4 +17,4 @@ class CompareImage():
 
 
 compare_image = CompareImage()
-compare_image.compare_image("Truth/11.jpg", "Path/11draw1.png")
+compare_image.compare_image("Truth/11.jpg", "Path/11tk_3amp.jpg")

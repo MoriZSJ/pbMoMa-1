@@ -2,12 +2,28 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = cv2.imread("Path/11amp.jpg")
-saveImg = "Path/11amptrans.jpg"
+img = np.array(cv2.imread("Path/11tk_3.jpg"))
+saveImg = "Path/11tk_3amp.jpg"
 
-rows, cols = img.shape[:2]
-pts1 = np.float32([[152,310],[182,310],[152,340],[182,340]])
-pts2 = np.float32([[0,0],[320,0],[0,320],[320,320]])
+# =======find center of path patch
+y, x, z = np.where(img==[0,0,0])
+#print(x,y)
+center = [int(np.mean(x)),int(np.mean(y))]
+print(center)
+
+# =======locate origin patch
+patchsize = 15
+p1 = [center[0]-patchsize,center[1]-patchsize]
+p2 = [center[0]+patchsize,center[1]-patchsize]
+p3 = [center[0]-patchsize,center[1]+patchsize]
+p4 = [center[0]+patchsize,center[1]+patchsize]
+pts1 = np.float32([p1,p2,p3,p4])
+print(p1,p2,p3,p4)
+# =======transformed patch size
+transsize = 320
+pts2 = np.float32([[0,0],[transsize,0],[0,transsize],[transsize,transsize]])
+
+# =======transform
 M = cv2.getPerspectiveTransform(pts1,pts2)
 res = cv2.warpPerspective(img,M,(320,320)) 
 plt.subplot(121)
@@ -16,5 +32,4 @@ plt.subplot(122)
 plt.imshow(res)
 plt.show()
 cv2.imwrite(saveImg,res)
-
 
