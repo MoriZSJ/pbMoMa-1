@@ -101,7 +101,7 @@ def eyeTrack(video,center):
     return center
 
 
-def drawPath(center,outPath):
+def drawPath(center,outPath,tck):
     #print("center: "+str(center))
     # white background
     rows, cols = [1100,700]
@@ -110,7 +110,7 @@ def drawPath(center,outPath):
 
     #draw path
     for i in range(len(center)-1):
-        cv2.line(img,center[i],center[i+1],(0,0,0),3)
+        cv2.line(img,center[i],center[i+1],(0,0,0),tck)
 
     #translate
     #M = np.float32([[1,0,-50],[0,1,-150]])
@@ -132,11 +132,12 @@ def drawPath(center,outPath):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture('test/11.avi')
-    outPath  = 'Path/11tk_3.jpg' 
-
+    video = cv2.VideoCapture('test/7.avi')
+    outPath  = 'Path/7_3.jpg' 
+    # thickness of path
+    tck = 3
     #center locations
     center = []
 
     eyeTrack(video,center)
-    drawPath(center,outPath)
+    drawPath(center,outPath,tck)

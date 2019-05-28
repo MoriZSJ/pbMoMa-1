@@ -95,7 +95,8 @@ class IdealFilter (object):
             self.NFFT = data.shape[0]
             self.__set_mask()            
             
-        fft = fftpack.fft(data, axis=axis)        
+        fft = fftpack.fft(data, axis=axis)
+        #print("fft: "+str(fft[fft.nonzero()]))        
         fft[self.mask] = 0   
         ifft_real = np.real(fftpack.ifft(fft, axis=axis))
         print("IFFT: "+str(ifft_real[ifft_real.nonzero()]))
@@ -106,6 +107,7 @@ class IdealFilterWindowed (SlidingWindow):
     def __init__(self, winsize, wl=.5, wh=.75, fps=1, step=1, outfun=None):
         SlidingWindow.__init__(self, winsize, step)
         self.filter = IdealFilter(wl, wh, fps=fps, NFFT=winsize)
+        print("selffilter: "+str(self.filter))
         self.outfun = outfun
         
     def next(self):

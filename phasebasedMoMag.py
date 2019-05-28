@@ -108,8 +108,8 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             print ('*',)
             
             # motion magnification
-            magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor    #原始相位-滤波后相位+放大后滤波后相位
-            #magnifiedPhases = filteredPhases*factor
+            #magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor    #原始相位-滤波后相位+放大后滤波后相位
+            magnifiedPhases = filteredPhases*factor
 
             # create new array
             newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)
@@ -150,7 +150,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'eye/baby.mp4';
 #vidFname = 'eye/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'eye/embryos01_30s.mp4'
-vidFname = 'eye_Vid/mytriangle.mp4'
+vidFname = 'eye_Vid/test.avi'
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
@@ -165,8 +165,8 @@ lowFreq = 0.01
 # high ideal filter
 highFreq = 0.1
 # output video filename
-vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
-#vidFnameOut = vidFname[:-4] + '.avi'
+#vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
+vidFnameOut = 'test.avi'
 #slowVidFnameOut = vidFname[:-4] + '-fps10-Amp.avi'
 
 phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq)

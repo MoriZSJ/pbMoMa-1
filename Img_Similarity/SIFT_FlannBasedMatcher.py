@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-imgname1 = 'Path/11tk_2amp.jpg'
+imgname1 = 'Path/11tk_3amp.jpg'
 imgname2 = 'Truth/11.jpg'
 
 sift = cv2.xfeatures2d.SIFT_create()
@@ -36,8 +36,9 @@ matchesMask = [[0,0] for i in range(len(matches))]
 
 good = []
 for m,n in matches:
-    if m.distance < 0.7*n.distance:
+    if m.distance < 0.8*n.distance:
         good.append([m])
+print("good: "+str(len(good))+"\nmatch: "+str(len(matches))+"\npercent:"+str(float(len(good))/len(matches)))
 
 img5 = cv2.drawMatchesKnn(img1,kp1,img2,kp2,matches,None,flags=2)
 cv2.imshow("FLANN", img5)
