@@ -7,22 +7,6 @@ def eyeTrack(video,center):
     #check OpenCV version
     (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
     print("cv: "+str(cv2.__version__))
-    
-    # tracker_types = ['BOOSTING', 'MIL','KCF', 'TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE','CSRT']
-    # tracker_type = tracker_types[2]
-    # if int(minor_ver) < 3:
-    #     tracker = cv2.Tracker_create(tracker_type)
-    # else:
-    #     if tracker_type == 'BOOSTING':
-    #         tracker = cv2.TrackerBoosting_create()
-    #     if tracker_type == 'MIL':
-    #         tracker = cv2.TrackerMIL_create()
-    #     if tracker_type == 'KCF':
-    #         tracker = cv2.TrackerKCF_create()
-    #     if tracker_type == 'TLD':
-    #         tracker = cv2.TrackerTLD_create()
-    #     if tracker_type == 'MEDIANFLOW':
-    #         tracker = cv2.TrackerMedianFlow_create()
 
     # Choose tracker
     tracker = cv2.TrackerKCF_create()   # KCF Tracker
@@ -104,7 +88,7 @@ def eyeTrack(video,center):
 def drawPath(center,outPath,tck):
     #print("center: "+str(center))
     # white background
-    rows, cols = [1100,700]
+    rows, cols = [640,360]
     img = np.zeros((cols,rows,3), np.uint8)
     img.fill(255)
 
@@ -132,8 +116,8 @@ def drawPath(center,outPath,tck):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture('test/7.avi')
-    outPath  = 'Path/7_3.jpg' 
+    video = cv2.VideoCapture('eye_Vid/eye-hourglass.mp4')
+    outPath  = 'test.jpg' 
     # thickness of path
     tck = 3
     #center locations

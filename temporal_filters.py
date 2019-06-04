@@ -76,14 +76,15 @@ class IdealFilter (object):
         """Ideal bandpass filter using FFT """
 
         self.fps = fps
+        #print("fps:",fps)
         self.wl = wl
         self.wh = wh
-        self.NFFT = NFFT
+        self.NFFT = NFFT        # windowSize = 40
         
         if self.NFFT is not None:
             self.__set_mask()
             
-    def __set_mask(self):
+    def __set_mask(self): 
         self.frequencies = fftpack.fftfreq(self.NFFT, d=1.0/self.fps)    
         print("freq: " +str(self.frequencies))
         # determine what indices in Fourier transform should be set to 0
@@ -94,9 +95,9 @@ class IdealFilter (object):
         if self.NFFT is None:
             self.NFFT = data.shape[0]
             self.__set_mask()            
-            
-        fft = fftpack.fft(data, axis=axis)
-        #print("fft: "+str(fft[fft.nonzero()]))        
+        # print("data: ",data,data.shape) 
+        fft = fftpack.fft(data, axis=axis)          # data = phases?
+        # print("fft: "+str(fft[fft.nonzero()]))        
         fft[self.mask] = 0   
         ifft_real = np.real(fftpack.ifft(fft, axis=axis))
         print("IFFT: "+str(ifft_real[ifft_real.nonzero()]))
@@ -116,6 +117,7 @@ class IdealFilterWindowed (SlidingWindow):
         if self.outfun is not None:
             # apply output function, e.g. to return first (most recent) item
             out = self.outfun(out)
+        #print("out: "+str(out))
         return out
 
 
@@ -150,7 +152,7 @@ class IIRFilter (SlidingWindow):
             zsize = (self.nb-1,) + data.shape[1:]
             data = np.concatenate((np.zeros(zsize), data), axis=0)
             
-            # initialize output memory with zerostoo
+            # initialize output memory with zeros too
             zsize = (self.na-1,) + data.shape[1:]
             self.windowy.update(np.zeros(zsize))
             
