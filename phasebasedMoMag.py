@@ -53,7 +53,6 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
     # video Writer
     fourcc = func_fourcc('M', 'J', 'P', 'G')
     vidWriter = cv2.VideoWriter(vidFnameOut, fourcc, int(fps), (width,height), 1)
-    #slowVidWriter = cv2.VideoWriter(slowVidFnameOut, fourcc, 10, (1024,599), 1) # slow vids with fps=10
     print ('Writing:', vidFnameOut)
 
     # how many frames
@@ -64,7 +63,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 
     # setup temporal filter
     filter = IdealFilterWindowed(windowSize, lowFreq, highFreq, fps=fpsForBandPass, outfun=lambda x: x[0])
-    #filter = ButterBandpassFilter(1, lowFreq, highFreq, fps=fpsForBandPass)
+    # filter = ButterBandpassFilter(3, lowFreq, highFreq, fps=fpsForBandPass)
 
     print ('FrameNr:', )
     for frameNr in range( nrFrames + windowSize ):
@@ -93,9 +92,10 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             # add image pyramid to video array
             # NOTE: on first frame, this will init rotating array to store the pyramid coeffs                 
             arr = pyArr.p2a(coeff)
-
+            # print("arr: ", arr, arr.shape)
 
             phases = np.angle(arr)
+            #print("phase: ",phases,phases.shape)
 
             # add to temporal filter
             filter.update([phases])
@@ -103,6 +103,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             # try to get filtered output to continue            
             try:
                 filteredPhases = filter.next()
+                #print("filtered: ",filteredPhases.shape,filteredPhases)
             except StopIteration:
                 #print("Stop")
                 continue
@@ -111,7 +112,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             
             # motion magnification
             #magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor    #原始相位-滤波后相位+放大后滤波后相位
-            magnifiedPhases = phases + filteredPhases*factor    #filteredPhases*factor
+            magnifiedPhases = phases - factor*filteredPhases    
 
             # create new array
             newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)
@@ -139,12 +140,10 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             #write to disk
             res = cv2.convertScaleAbs(rgbIm)
             vidWriter.write(res)
-            #slowVidWriter.write(res)
 
     # free the video reader/writer
     vidReader.release()
     vidWriter.release() 
-    #slowVidWriter.release()  
 
 
 ################# main script
@@ -156,20 +155,19 @@ vidFname = 'eye_Vid/eye-ud.mp4'
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
-# the size of the sliding window    #决定筛选freq的列表长度
+# the size of the sliding window    #筛选freq的列表长度
 windowSize = 40         #30
 # the magnifaction factor
-factor = 5
+factor = 0.9
 # the fps used for the bandpass (use -1 for input video fps)
-fpsForBandPass = 20 #600 #筛选freq的范围:[0,fps/2] 
+fpsForBandPass = 0.5 #600 #筛选freq的范围:[0,fps/2] 
 # low ideal filter
 lowFreq = 0.01
 # high ideal filter
 highFreq = 0.1
 # output video filename
 #vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
-vidFnameOut = 'test_ideal.avi'
-#slowVidFnameOut = vidFname[:-4] + '-fps10-Amp.avi'
+vidFnameOut = 'test_ideal_de.avi'
 
 phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq)
 
