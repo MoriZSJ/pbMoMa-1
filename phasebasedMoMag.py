@@ -20,7 +20,7 @@ from temporal_filters import IdealFilterWindowed, ButterBandpassFilter
 def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq):
 
     # initialize the steerable complex pyramid
-    steer = Steerable(5)
+    steer = Steerable(4)
     pyArr = Pyramid2arr(steer)
 
     print ("Reading:", vidFname,)
@@ -88,14 +88,14 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 
             # get coeffs for pyramid
             coeff = steer.buildSCFpyr(grayIm)
-
-            # add image pyramid to video array
+            # print("coeff:",np.array(coeff[1]).shape)
+            # image pyramid to video array
             # NOTE: on first frame, this will init rotating array to store the pyramid coeffs                 
             arr = pyArr.p2a(coeff)
             # print("arr: ", arr, arr.shape)
 
             phases = np.angle(arr)
-            #print("phase: ",phases,phases.shape)
+            print("phase: ",phases,phases.shape)
 
             # add to temporal filter
             filter.update([phases])
@@ -112,7 +112,7 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
             
             # motion magnification
             #magnifiedPhases = (phases - filteredPhases) + filteredPhases*factor    #原始相位-滤波后相位+放大后滤波后相位
-            magnifiedPhases = phases - factor*filteredPhases    
+            magnifiedPhases = phases + factor*filteredPhases    
 
             # create new array
             newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)
@@ -151,23 +151,23 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'eye/baby.mp4';
 #vidFname = 'eye/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'eye/embryos01_30s.mp4'
-vidFname = 'eye_Vid/eye-ud.mp4'
+vidFname = 'test/11.avi'
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
 # the size of the sliding window    #筛选freq的列表长度
-windowSize = 40         #30
+windowSize = 30         #30
 # the magnifaction factor
-factor = 0.9
+factor = 20
 # the fps used for the bandpass (use -1 for input video fps)
-fpsForBandPass = 0.5 #600 #筛选freq的范围:[0,fps/2] 
+fpsForBandPass = 20 #600 #筛选freq的范围:[0,fps/2] 
 # low ideal filter
-lowFreq = 0.01
+lowFreq = 1  #110
 # high ideal filter
-highFreq = 0.1
+highFreq = 3  #140
 # output video filename
 #vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
-vidFnameOut = 'test_ideal_de.avi'
+vidFnameOut = 'cache.avi'
 
 phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq)
 
