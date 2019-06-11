@@ -9,20 +9,20 @@ from temporal_filters import IdealFilterWindowed, ButterBandpassFilter
 def draw_freq(phase,fpsForBandPass,phfftOut,magFreq=False):
     phfft = abs(np.fft.fft(phase))
     freq = np.fft.fftfreq(len(phfft),d = 1./fpsForBandPass)
-    # print("phfft: ",phfft)
+ 
 
-    i = np.argsort(freq)
-    freq = freq[i]
-    phfft = phfft[i]
-    freq = freq[len(freq)/2+1:]
-    phfft = phfft[len(phfft)/2+1:]
+    freq = freq[1:len(freq)/2]
+    phfft = phfft[1:len(phfft)/2]
+    # print("freq: ",min(freq))
 
     pyplot.figure(figsize=(20, 10))
 
     pyplot.xlabel("Freq (Hz)")
     pyplot.plot(freq,phfft)
-    x_tck = np.arange(min(freq), max(freq)+1,0.2)
+    x_tck = np.arange(min(freq), max(freq),(max(freq)-min(freq))/20)
     pyplot.xticks(x_tck)
+    # y_tck = np.arange(min(phfft), 100000,(100000-min(phfft))/10)
+    # pyplot.yticks(y_tck)
     if magFreq:
         pyplot.title("Magnified FFT")
         pyplot.savefig(magPhfftOut)
@@ -56,7 +56,6 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
 
     # setup temporal filter
     filter = IdealFilterWindowed(windowSize, lowFreq, highFreq, fps=fpsForBandPass, outfun=lambda x: x[0])
-
     print("FrameNum: ")
     for FrameNum in range(windowSize+vidFrames):
         print(FrameNum)
@@ -93,10 +92,10 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
         print ("done!")
 
         # motion magnification
-        magnifiedPhases = phase + factor*filteredPhases         # one dimension
+        magnifiedPhases = factor*filteredPhases         # one dimension
         # print("magni: ", magnifiedPhases.shape)
         if drawOnce:
-            draw_freq(magnifiedPhases,fpsForBandPass,magPhfftOut,magFreq=True)
+            draw_freq(filteredPhases,fpsForBandPass,magPhfftOut,magFreq=True)
             drawOnce = False
 
         # create new array
@@ -104,7 +103,15 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
 
         # create pyramid coeffs
         try:
-            newCoeff = pyArr.a2p(newArr)
+            newCoeff = np.asarray(pyArr.a2p(newArr))
+            # print("coeff1: ",newCoeff[3])
+            for i in range(len(newCoeff)):
+                if i <= 3:
+                    newCoeff[i] = np.array(newCoeff[i]) - np.array(newCoeff[i])  
+                else:
+                    continue                    
+
+            # print("coeff111: ",newCoeff[3])
         except StopIteration:
             print("End")
 
@@ -121,7 +128,7 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
         rgbIm[:,:,1] = out
         rgbIm[:,:,2] = out
         
-        #write to disk
+        # write to disk
         res = cv2.convertScaleAbs(rgbIm)
         vidWriter.write(res)
 
@@ -132,20 +139,20 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
 
 
 ################# main script
-vidIn = "eye_Vid/mybutterfly.mp4"
-vidOut = "freq_out/magmybtfy.avi"
-phfftOut = "freq_out/phfft.jpg"
-magPhfftOut = "freq_out/magphfft.jpg"
+vidIn = "eye_Vid/eye-btfy.mp4"
+vidOut = "mag_Videos/btfy/testtt.avi"
+phfftOut = "mag_Videos/btfy/phfft.jpg"
+magPhfftOut = "mag_Videos/btfy/phfft_mag.jpg"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
-windowSize = 40      
+windowSize = 50    
 # the magnifaction factor
-factor = 20
+factor = -1
 # the fps used for the bandpass (use -1 for input video fps) #筛选freq的范围:[0,fps/2]
-fpsForBandPass = 20  
+fpsForBandPass = 30
 # low ideal filter
-lowFreq = 0.01
+lowFreq = 0.7
 # high ideal filter
-highFreq = 0.1
+highFreq = 10
 
 eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)

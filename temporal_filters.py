@@ -93,7 +93,7 @@ class IdealFilter (object):
         fft = fftpack.fft(data, axis=axis)          # data = phases = self.memory
         # print("fft: "+str(fft[fft.nonzero()]))        
         fft[self.mask] = 0   
-        print("fft shape",fft.shape[1],fft.nonzero())
+        # print("fft shape",fft.shape[1],fft.nonzero())
         print("mask: ",self.mask)
 
 

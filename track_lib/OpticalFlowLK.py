@@ -1,18 +1,18 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture("freq_out/magmybtfy.avi")
-imgPath = "freq_out/OpticFlowLK.jpg"
+cap = cv2.VideoCapture("mag_Videos/btfy/test4.avi")
+imgPath = "mag_Videos/btfy/OpticFlowLK.jpg"
 
 # ShiTomasi corner detection的参数
 feature_params = dict(maxCorners=100,
                       qualityLevel=0.1,
-                      minDistance=10,
-                      blockSize=10)
+                      minDistance=5,
+                      blockSize=5)
 # 光流法参数
 # maxLevel 未使用的图像金字塔层数
 lk_params = dict(winSize=(10,10),
-                 maxLevel=7,
+                 maxLevel=3,
                  criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
 # 创建随机生成的颜色

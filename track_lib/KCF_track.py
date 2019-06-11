@@ -96,28 +96,18 @@ def drawPath(center,outPath,tck):
     for i in range(len(center)-1):
         cv2.line(img,center[i],center[i+1],(0,0,0),tck)
 
-    #translate
-    #M = np.float32([[1,0,-50],[0,1,-150]])
-    #img = cv2.warpAffine(img,M,(cols,rows))
-
     cv2.imshow('PathOri', img)
     cv2.waitKey()
     cv2.imwrite(outPath, img)
     
-    # Image Amplification
-    # img2 = cv2.imread('ori.jpg')
-    # imgscl=cv2.resize(img2,(1000,1000),interpolation=cv2.INTER_CUBIC)
-    # cv2.imshow('PathScaled', imgscl)
-    # cv2.imwrite('Scaled.jpg', imgscl)
-    # cv2.waitKey()
 
 
 
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture("freq_out/magmybtfy.avi")
-    outPath  = "freq_out/KCFtrack.jpg" 
+    video = cv2.VideoCapture("mag_Videos/btfy/test4.avi")
+    outPath  = "mag_Videos/btfy/KCFtrack.jpg" 
     # thickness of path
     tck = 2
     #center locations

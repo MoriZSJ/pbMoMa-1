@@ -27,7 +27,7 @@ def vid_read(vidFname):
 #############
 
 ####### show freq
-def show_frequencies(vid_data,framerate,bounds=None):
+def show_frequencies(vid_data,freqOut,framerate,bounds=None):
     """Graph the frequency strength of the video"""
     averages = []
     if bounds:
@@ -38,37 +38,33 @@ def show_frequencies(vid_data,framerate,bounds=None):
             averages.append(vid_data[x, :, :, :].sum()) # each channel has equal greyvalue
 
     averages = averages - min(averages)
-    print("aver: ",averages)
+    # print("aver: ",averages.shape)
 
-    freqs = scipy.fftpack.fftfreq(len(averages), d=1.0 / framerate)  #生成采样频率(signal size, sampling freq)
-    # print("fft: ",scipy.fftpack.fft(averages))
+    freqs = scipy.fftpack.fftfreq(len(averages), d=1.0 / framerate)  #生成采样频率(signal size, sampling interval)
+    # print("freq: ",freqs.shape, freqs)
     fft = abs(scipy.fftpack.fft(averages))
-    # print("fft: ",fft)
-    idx = np.argsort(freqs)     # sort the list index
-    pyplot.plot()                # pyplot.subplot(charts_y, charts_x, 2)
-    pyplot.title("FFT")
-    pyplot.xlabel("Freq (Hz)")
-    freqs = freqs[idx]
-    # print("freqs: ",freqs)
-    fft = fft[idx]  
-    # print("fft: ",fft)
+    freqs = freqs[1:len(freqs) / 2 ]
+    fft = fft[1:len(fft) / 2 ]
+    # print("freqs: ",len(freqs), "\nfft: ",len(fft))
 
-    freqs = freqs[len(freqs) / 2 +1:]
-    fft = fft[len(fft) / 2 +1:]
-    # fft = np.where(fft>0,fft,0)
-    print("freqs: ",freqs,"\nfft: ",fft)
-    pyplot.plot(freqs, fft/sum(abs(fft)))
+    pyplot.figure(figsize=(20, 10))
+    pyplot.xlabel("Freq (Hz)")
+    pyplot.ylabel("|Average(Freq)|")
+    pyplot.plot(freqs, fft/sum(fft))
+    pyplot.title("FFT")
     # print("fft shape: ",abs(fft).shape,abs(fft)[:20])
-    x_tck = np.arange(min(freqs),max(freqs),10)
+    x_tck = np.arange(min(freqs),max(freqs)+0.01,(max(freqs)-min(freqs))/40)
     pyplot.xticks(x_tck)
+    pyplot.savefig(freqOut)
     pyplot.show()
 #######
 
 
 
 ########### main script
-vidFname = "test/guitar.mp4"
-framerate = 600
+vidFname = "mag_Videos/btfy/test4_newphase.avi"
+freqOut = "mag_Videos/btfy/vidfft4_np.jpg"
+framerate = 30
 vid = vid_read(vidFname)
 # em.show_frequencies(vid, framerate)
-show_frequencies(vid, framerate) #,bounds=[0,180,0,320])
+show_frequencies(vid, freqOut, framerate) #,bounds=[0,180,0,320])
