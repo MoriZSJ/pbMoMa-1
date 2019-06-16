@@ -62,8 +62,8 @@ def show_frequencies(vid_data,freqOut,framerate,bounds=None):
 
 
 ########### main script
-vidFname = "mag_Videos/btfy/test4_newphase.avi"
-freqOut = "mag_Videos/btfy/vidfft4_np.jpg"
+vidFname = "mag_Videos/btfy/test4.avi"
+freqOut = "mag_Videos/btfy/vidfft4.jpg"
 framerate = 30
 vid = vid_read(vidFname)
 # em.show_frequencies(vid, framerate)

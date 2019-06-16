@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = np.array(cv2.imread("Path/15_1.jpg"))
-saveImg = "Path/15_1amp.jpg"
+img = np.array(cv2.imread("mag_Videos/btfy/KCFtrack.jpg"))
+saveImg = "mag_Videos/btfy/KCFmag.jpg"
 
 # =======find center of path patch
 y, x, z = np.where(img==[0,0,0])
@@ -12,7 +12,7 @@ center = [int(np.mean(x)),int(np.mean(y))]
 print(center)
 
 # =======locate origin patch
-patchsize = 15
+patchsize = 20
 p1 = [center[0]-patchsize,center[1]-patchsize]
 p2 = [center[0]+patchsize,center[1]-patchsize]
 p3 = [center[0]-patchsize,center[1]+patchsize]

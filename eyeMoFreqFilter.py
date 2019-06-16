@@ -33,7 +33,7 @@ def draw_freq(phase,fpsForBandPass,phfftOut,magFreq=False):
 
 
 
-def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce):
+def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce):
     # read input video
     vidReader = cv2.VideoCapture(vidIn)
     vidFrames = int(vidReader.get(cv2.CAP_PROP_FRAME_COUNT))    
@@ -51,7 +51,7 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
     print("Output: "+str(vidOut))
 
     # initialize the steerable complex pyramid
-    steer = Steerable(5)
+    steer = Steerable(6)
     pyArr = Pyramid2arr(steer)
 
     # setup temporal filter
@@ -69,7 +69,7 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
 
         # get coeffs for pyramid
         coeff = steer.buildSCFpyr(grayIm)
-        # cv2.imwrite("coeff.png",visualize(coeff))
+        # print(coeff[].shape)
 
         # add image pyramid to video array
         arr = pyArr.p2a(coeff)
@@ -77,8 +77,8 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
         print("phase: ",phase.shape)
 
         # show phase_freq img
-        if FrameNum == 0:
-            draw_freq(phase,fpsForBandPass,phfftOut)
+        # if FrameNum == 0:
+            # draw_freq(phase,fpsForBandPass,phfftOut)
         
         # add to temporal filter
         filter.update([phase])
@@ -94,9 +94,9 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
         # motion magnification
         magnifiedPhases = factor*filteredPhases         # one dimension
         # print("magni: ", magnifiedPhases.shape)
-        if drawOnce:
-            draw_freq(filteredPhases,fpsForBandPass,magPhfftOut,magFreq=True)
-            drawOnce = False
+        # if drawOnce:
+            # draw_freq(filteredPhases,fpsForBandPass,magPhfftOut,magFreq=True)
+            # drawOnce = False
 
         # create new array
         newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)        
@@ -104,13 +104,14 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
         # create pyramid coeffs
         try:
             newCoeff = np.asarray(pyArr.a2p(newArr))
-            # print("coeff1: ",newCoeff[3])
-            for i in range(len(newCoeff)):
-                if i <= 3:
-                    newCoeff[i] = np.array(newCoeff[i]) - np.array(newCoeff[i])  
-                else:
-                    continue                    
-
+            # cv2.imwrite(coeffOut,visualize(newCoeff))
+            # print("coeff1: ",len(newCoeff[3]))
+            # for i in range(len(newCoeff)):      #only keep the low pass coeff
+            #     if i <= len(newCoeff)-2:
+            #         newCoeff[i] = np.array(newCoeff[i]) - np.array(newCoeff[i])  
+            #     else:
+            #         continue      
+            # cv2.imwrite("mag_Videos/btfy/newcoeff_post.png",visualize(newCoeff))              
             # print("coeff111: ",newCoeff[3])
         except StopIteration:
             print("End")
@@ -140,19 +141,19 @@ def eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass
 
 ################# main script
 vidIn = "eye_Vid/eye-btfy.mp4"
-vidOut = "mag_Videos/btfy/testtt.avi"
+vidOut = "mag_Videos/btfy/test20.avi"
 phfftOut = "mag_Videos/btfy/phfft.jpg"
 magPhfftOut = "mag_Videos/btfy/phfft_mag.jpg"
+coeffOut = "mag_Videos/btfy/coeff-12-8-0.0-0.5.png"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
 windowSize = 50    
 # the magnifaction factor
 factor = -1
 # the fps used for the bandpass (use -1 for input video fps) #筛选freq的范围:[0,fps/2]
-fpsForBandPass = 30
+fpsForBandPass = 60
 # low ideal filter
-lowFreq = 0.7
+lowFreq = 0.5
 # high ideal filter
 highFreq = 10
-
-eyeFreqFilter(vidIn,vidOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)
+eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)

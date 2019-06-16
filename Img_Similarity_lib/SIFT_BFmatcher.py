@@ -2,16 +2,18 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-imgname1 = 'Path/11tk_3amp.jpg'
-imgname2 = 'Truth/11.jpg'
+imgname1 = 'mag_Videos/btfy/KCFtrack.jpg'
+imgname2 = 'Truth_Patches/11.jpg'
 
 sift = cv2.xfeatures2d.SIFT_create()
 
 img1 = cv2.imread(imgname1)
+print(img1.shape)  
 gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY) #灰度处理图像
 kp1, des1 = sift.detectAndCompute(img1,None)   #des是描述子
 
 img2 = cv2.imread(imgname2)
+print(img2.shape)
 gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)#灰度处理图像
 kp2, des2 = sift.detectAndCompute(img2,None)  #des是描述子
 
