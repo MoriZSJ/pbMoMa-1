@@ -151,23 +151,23 @@ def phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsF
 #vidFname = 'eye/baby.mp4';
 #vidFname = 'eye/WIN_20151208_17_11_27_Pro.mp4.normalized.avi'
 #vidFname = 'eye/embryos01_30s.mp4'
-vidFname = 'test/11.avi'
+vidFname = "test/guitar.mp4"
 
 # maximum nr of frames to process
 maxFrames = 60000       #60000
 # the size of the sliding window    #筛选freq的列表长度
 windowSize = 30         #30
 # the magnifaction factor
-factor = 20
+factor = 30
 # the fps used for the bandpass (use -1 for input video fps)
-fpsForBandPass = 20 #600 #筛选freq的范围:[0,fps/2] 
+fpsForBandPass = 600 #600 #筛选freq的范围:[0,fps/2] 
 # low ideal filter
-lowFreq = 1  #110
+lowFreq = 72  #110
 # high ideal filter
-highFreq = 3  #140
+highFreq = 92  #140
 # output video filename
 #vidFnameOut = vidFname[:-4] + '-PhaseMag%dIdeal-lo%.2f-hi%.2f-fps%d.avi' % (factor, lowFreq, highFreq,fpsForBandPass)
-vidFnameOut = 'cache.avi'
+vidFnameOut = "mag_Videos/guitar/test.avi"
 
 phaseBasedMagnify(vidFname, vidFnameOut, maxFrames, windowSize, factor, fpsForBandPass, lowFreq, highFreq)
 

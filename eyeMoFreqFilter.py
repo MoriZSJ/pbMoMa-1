@@ -3,8 +3,8 @@ import cv2, sys
 import numpy as np
 from pyr2arr import Pyramid2arr
 from matplotlib import pyplot
-from temporal_filters import IdealFilterWindowed, ButterBandpassFilter
-
+from temporal_filters import IdealFilterWindowed_Gaus 
+from ideal_temporal_filters import IdealFilterWindowed
 
 def draw_freq(phase,fpsForBandPass,phfftOut,magFreq=False):
     phfft = abs(np.fft.fft(phase))
@@ -51,11 +51,13 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
     print("Output: "+str(vidOut))
 
     # initialize the steerable complex pyramid
-    steer = Steerable(6)
+    steer = Steerable(5)
     pyArr = Pyramid2arr(steer)
 
     # setup temporal filter
-    filter = IdealFilterWindowed(windowSize, lowFreq, highFreq, fps=fpsForBandPass, outfun=lambda x: x[0])
+    filter = IdealFilterWindowed_Gaus(windowSize, lowFreq, highFreq, fps=fpsForBandPass, outfun=lambda x: x[0])
+    # filter = IdealFilterWindowed(windowSize, lowFreq, highFreq, fps=fpsForBandPass, outfun=lambda x: x[0])
+   
     print("FrameNum: ")
     for FrameNum in range(windowSize+vidFrames):
         print(FrameNum)
@@ -92,7 +94,7 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
         print ("done!")
 
         # motion magnification
-        magnifiedPhases = factor*filteredPhases         # one dimension
+        magnifiedPhases = phase + factor*filteredPhases         # one dimension
         # print("magni: ", magnifiedPhases.shape)
         # if drawOnce:
             # draw_freq(filteredPhases,fpsForBandPass,magPhfftOut,magFreq=True)
@@ -123,7 +125,7 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
         out[out>255] = 255
         out[out<0] = 0
         
-        # make a RGB image
+        # make a greyvalue image
         rgbIm = np.empty((out.shape[0], out.shape[1], 3))
         rgbIm[:,:,0] = out
         rgbIm[:,:,1] = out
@@ -140,20 +142,22 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
 
 
 ################# main script
-vidIn = "eye_Vid/eye-btfy.mp4"
-vidOut = "mag_Videos/btfy/test20.avi"
-phfftOut = "mag_Videos/btfy/phfft.jpg"
-magPhfftOut = "mag_Videos/btfy/phfft_mag.jpg"
-coeffOut = "mag_Videos/btfy/coeff-12-8-0.0-0.5.png"
+vidIn = "test/baby.mp4" # "eye_Vid/eye-btfy.mp4"
+vidOut = "mag_Videos/baby/test_gauss_15.avi"
+phfftOut = "mag_Videos/baby/phfft.jpg"
+magPhfftOut = "mag_Videos/baby/phfft_mag.jpg"
+coeffOut = "mag_Videos/baby/coeff-12-8-0.0-0.5.png"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
-windowSize = 50    
+windowSize = 16  
 # the magnifaction factor
-factor = -1
+factor = 15
 # the fps used for the bandpass (use -1 for input video fps) #筛选freq的范围:[0,fps/2]
-fpsForBandPass = 60
+fpsForBandPass = 30
 # low ideal filter
-lowFreq = 0.5
+lowFreq = 0.4
 # high ideal filter
-highFreq = 10
+highFreq = 0.8
+
+
 eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)
