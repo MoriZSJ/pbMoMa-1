@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = np.array(cv2.imread("mag_Videos/square/KCFtrack.jpg"))
-saveImg = "mag_Videos/square/KCFmag.jpg"
+img = np.array(cv2.imread("mag_Videos/tri/KCFtrack.jpg"))
+saveImg = "mag_Videos/tri/KCFmag.jpg"
 
 # =======find center of path patch
 y, x, z = np.where(img==[0,0,0])

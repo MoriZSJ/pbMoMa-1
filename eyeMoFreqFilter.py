@@ -142,11 +142,11 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
 
 
 ################# main script
-vidIn = "eye_Vid/eye-lr.mp4" # "eye_Vid/eye-btfy.mp4"
-vidOut = "mag_Videos/lr/maglr.mp4"
+vidIn = "eye_Vid/eye-tri.mp4" # "eye_Vid/eye-btfy.mp4"
+vidOut = "mag_Videos/tri/maglr.mp4"
 # phfftOut = "mag_Videos/guitar/phfft.jpg"
 # magPhfftOut = "mag_Videos/guitar/phfft_mag.jpg"
-coeffOut = "mag_Videos/lr/coeff-0.8-2.jpg"
+coeffOut = "mag_Videos/tri/coeff-0.8-2.jpg"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
 windowSize = 40
