@@ -6,17 +6,17 @@ import PIL.ImageOps
 import matplotlib.pyplot as plt
 
 ############# image grayvalued #################
-img_path = "../BA_thesis/BachelorArbeitMaterial/imgs/cranecrop-ori.jpg"
-gray_path = "../BA_thesis/BachelorArbeitMaterial/imgs/cranecrop_ori.jpg"
+# img_path = "../BA_thesis/BachelorArbeitMaterial/imgs/cranecrop-ori.jpg"
+# gray_path = "../BA_thesis/BachelorArbeitMaterial/imgs/cranecrop_ori.jpg"
 
-imGray = cv2.imread(img_path,cv2.IMREAD_GRAYSCALE)
-cv2.imshow("gray",imGray)
-cv2.waitKey()
-cv2.imwrite(gray_path,imGray)
+# imGray = cv2.imread(img_path,cv2.IMREAD_GRAYSCALE)
+# cv2.imshow("gray",imGray)
+# cv2.waitKey()
+# cv2.imwrite(gray_path,imGray)
 
 ############# image invert-color  ################
-# img_path = "mag_Videos/btfy/coeff-3lvl-4ori-m.jpg"
-# out_path = "mag_Videos/btfy/invert_m.jpg"
+# img_path = "mag_Videos/baby/coeff-0.4-0.8.jpg"
+# out_path = "mag_Videos/baby/invert_0.4-0.8.jpg"
 
 
 # img = Image.open(img_path)
@@ -24,16 +24,14 @@ cv2.imwrite(gray_path,imGray)
 # ivt.save(out_path)
 
 ############# paint gray-image with color  ################
-# img_path = "mag_Videos/btfy/invert_l.jpg"
-# out_path  ="mag_Videos/btfy/color_l.jpg"
-
-########### opencv $###############
-# imGray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-# # print(imgColor[500,500:900])
-# imgColor = cv2.applyColorMap(imGray,cv2.COLORMAP_OCEAN)
-# cv2.imshow("color",imgColor)
-# cv2.waitKey()
-# cv2.imwrite(out_path,imgColor)
+img_path = "mag_Videos/baby/invert_0.4-0.8.jpg"
+out_path  ="mag_Videos/baby/color_0.4-0.8.jpg"
+imGray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+# print(imgColor[500,500:900])
+imgColor = cv2.applyColorMap(imGray,cv2.COLORMAP_OCEAN)
+cv2.imshow("color",imgColor)
+cv2.waitKey()
+cv2.imwrite(out_path,imgColor)
 
 ########### matplotlib $###############
 # plt.figure(figsize=(1920,1080))

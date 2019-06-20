@@ -1,3 +1,5 @@
+*.zip
+
 #videos, pdfs and imgs
 *.avi
 *.mp4
