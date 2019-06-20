@@ -106,15 +106,15 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
         # create pyramid coeffs
         try:
             newCoeff = np.asarray(pyArr.a2p(newArr))
-            # cv2.imwrite(coeffOut,visualize(newCoeff))
             # print("coeff1: ",len(newCoeff[3]))
             # for i in range(len(newCoeff)):      #only keep the low pass coeff
             #     if i <= len(newCoeff)-2:
             #         newCoeff[i] = np.array(newCoeff[i]) - np.array(newCoeff[i])  
             #     else:
             #         continue      
-            # cv2.imwrite("mag_Videos/btfy/newcoeff_post.png",visualize(newCoeff))              
-            # print("coeff111: ",newCoeff[3])
+            # if FrameNum==65: 
+            #     cv2.imwrite(coeffOut, visualize(newCoeff))   
+            #     break           
         except StopIteration:
             print("End")
 
@@ -142,22 +142,21 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
 
 
 ################# main script
-vidIn = "test/baby.mp4" # "eye_Vid/eye-btfy.mp4"
-vidOut = "mag_Videos/baby/test_gauss_15.avi"
-phfftOut = "mag_Videos/baby/phfft.jpg"
-magPhfftOut = "mag_Videos/baby/phfft_mag.jpg"
-coeffOut = "mag_Videos/baby/coeff-12-8-0.0-0.5.png"
+vidIn = "eye_Vid/eye-btfy.mp4" # "eye_Vid/eye-btfy.mp4"
+vidOut = "mag_Videos/btfy/gaus-5-60-0-1.5.mp4"
+phfftOut = "mag_Videos/crane_crop/phfft.jpg"
+magPhfftOut = "mag_Videos/crane_crop/phfft_mag.jpg"
+coeffOut = "mag_Videos/crane_crop/coeff-3lvl-4ori.jpg"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
-windowSize = 16  
+windowSize = 40
 # the magnifaction factor
-factor = 15
+factor = 5
 # the fps used for the bandpass (use -1 for input video fps) #筛选freq的范围:[0,fps/2]
-fpsForBandPass = 30
+fpsForBandPass = 60
 # low ideal filter
-lowFreq = 0.4
+lowFreq = 0
 # high ideal filter
-highFreq = 0.8
-
+highFreq = 1.5
 
 eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)

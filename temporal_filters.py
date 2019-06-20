@@ -24,7 +24,6 @@ class GaussWindow(object):
             # get gauss window 
             window = np.array(scipy.signal.gaussian(self.size, self.std))
             out = np.transpose(np.multiply(window,self.memory.transpose()))
-
             # slide
             self.memory = self.memory[1:]
             
