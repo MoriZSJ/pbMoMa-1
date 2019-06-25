@@ -106,10 +106,10 @@ def drawPath(center,outPath,tck):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture("mag_Videos/tri/magtri.mp4")
-    outPath  = "mag_Videos/tri/KCFtrack.jpg" 
+    video = cv2.VideoCapture("mag_Videos/btfy/1.mp4")
+    outPath  = "mag_Videos/btfy/tck1/btfy1.jpg" 
     # thickness of path
-    tck = 2
+    tck = 1
     #center locations
     center = []
 

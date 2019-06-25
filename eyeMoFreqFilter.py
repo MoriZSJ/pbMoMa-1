@@ -71,7 +71,11 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
 
         # get coeffs for pyramid
         coeff = steer.buildSCFpyr(grayIm)
-        # print(coeff[].shape)
+        # if FrameNum == 50:
+        #     cv2.imshow("haha",visualize(coeff))
+        #     cv2.imwrite(phase_path,visualize(coeff))
+        #     cv2.waitKey()
+        #     break
 
         # add image pyramid to video array
         arr = pyArr.p2a(coeff)
@@ -88,6 +92,7 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
         # try to get filtered output to continue            
         try:
             filteredPhases = filter.next()          # = out
+            
         except StopIteration:
             continue
 
@@ -99,6 +104,14 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
         # if drawOnce:
             # draw_freq(filteredPhases,fpsForBandPass,magPhfftOut,magFreq=True)
             # drawOnce = False
+
+        # if FrameNum == 41:
+        #     filteredPhases = np.asarray(pyArr.a2p(magnifiedPhases))
+        #     cv2.imshow("haha",visualize(filteredPhases))
+        #     cv2.imwrite(phase_path,visualize(filteredPhases))
+        #     cv2.waitKey()
+        #     break
+
 
         # create new array
         newArr = np.abs(arr) * np.exp(magnifiedPhases * 1j)        
@@ -142,21 +155,23 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
 
 
 ################# main script
-vidIn = "eye_Vid/eye-tri.mp4" # "eye_Vid/eye-btfy.mp4"
-vidOut = "mag_Videos/tri/maglr.mp4"
+vidIn = "eye_Vid/eye-btfy.mp4" # "eye_Vid/eye-btfy.mp4"
+vidOut = "mag_Videos/btfy/factorrestrict.mp4"
 # phfftOut = "mag_Videos/guitar/phfft.jpg"
 # magPhfftOut = "mag_Videos/guitar/phfft_mag.jpg"
-coeffOut = "mag_Videos/tri/coeff-0.8-2.jpg"
+coeffOut = "mag_Videos/btfy/filtered.jpg"
+phase_path = "mag_Videos/btfy/phasepath.jpg"
+fphase_path = "mag_Videos/btfy/fphasepath.jpg"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
 windowSize = 40
 # the magnifaction factor
-factor = -1
+factor = 5
 # the fps used for the bandpass (use -1 for input video fps) #筛选freq的范围:[0,fps/2]
 fpsForBandPass = 60
 # low ideal filter
-lowFreq = 1.5
+lowFreq = 0
 # high ideal filter
-highFreq = 20
+highFreq = 1.5
 
 eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)

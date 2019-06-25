@@ -1,14 +1,14 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture("mag_Videos/btfy/gaus-atten-1.5-20.mp4")
-imgPath = "mag_Videos/btfy/OpticFlowLK.jpg"
+cap = cv2.VideoCapture("magVid_matlab/btfy/btfy1.mp4")
+imgPath = "magVid_matlab/btfy/matOpticFlowbtfy03.jpg"
 
 # ShiTomasi corner detection的参数
 feature_params = dict(maxCorners=100,
-                      qualityLevel=0.2,
-                      minDistance=7,
-                      blockSize=7)
+                      qualityLevel=0.3,
+                      minDistance=10,
+                      blockSize=15)
 # 光流法参数
 # maxLevel 未使用的图像金字塔层数
 lk_params = dict(winSize=(10,10),
