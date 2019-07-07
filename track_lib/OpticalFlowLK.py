@@ -1,12 +1,12 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture("magVid_matlab/btfy/btfy1.mp4")
-imgPath = "magVid_matlab/btfy/matOpticFlowbtfy03.jpg"
+cap = cv2.VideoCapture("mag_Videos/mydata/btfy/btfy1.mp4")
+imgPath = "mag_Videos/mydata/btfy/OFbtfy.jpg"
 
 # ShiTomasi corner detection的参数
 feature_params = dict(maxCorners=100,
-                      qualityLevel=0.3,
+                      qualityLevel=0.1,
                       minDistance=10,
                       blockSize=15)
 # 光流法参数

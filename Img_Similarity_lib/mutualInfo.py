@@ -2,8 +2,8 @@ from sklearn import metrics as mr
 from scipy.misc import imread
 import numpy as np
  
-img1 = imread('Path/11tk_3amp.jpg')
-img2 = imread('Truth/11.jpg')
+img1 = imread('mag_Videos/btfy/btfymag1.jpg')
+img2 = imread('Truth_Patches/6-mag.jpg')
  
 img2 = np.resize(img2, (img1.shape[0], img1.shape[1], img1.shape[2]))
  

@@ -79,8 +79,8 @@ class DHash(object):
         return bin(difference).count("1")
 
 
-truth = "Truth/1.jpg"
-img = "Path/11trans.jpg"
+truth = "Truth_Patches/11-mag.jpg"
+img = "mag_Videos/btfy/btfymag1.jpg"
 im = Image.open(img)
 Truth = Image.open(truth)
 print("DHash: "+str(DHash.hamming_distance(Truth,im)))

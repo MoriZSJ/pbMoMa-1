@@ -155,23 +155,23 @@ def eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsFo
 
 
 ################# main script
-vidIn = "eye_Vid/eye-btfy.mp4" # "eye_Vid/eye-btfy.mp4"
-vidOut = "mag_Videos/btfy/factorrestrict.mp4"
+vidIn = "mag_Videos/mydata/btfy/btfy1.mp4" # "eye_Vid/eye-btfy.mp4"
+vidOut = "mag_Videos/mydata/btfy/attBtfy.mp4"
 # phfftOut = "mag_Videos/guitar/phfft.jpg"
 # magPhfftOut = "mag_Videos/guitar/phfft_mag.jpg"
-coeffOut = "mag_Videos/btfy/filtered.jpg"
-phase_path = "mag_Videos/btfy/phasepath.jpg"
-fphase_path = "mag_Videos/btfy/fphasepath.jpg"
+coeffOut = "mag_Videos/mydata/btfy/filtered.jpg"
+# phase_path = "mag_Videos/mydata/btfy/phasepath.jpg"
+# fphase_path = "mag_Videos/mydata/btfy/fphasepath.jpg"
 drawOnce = True
 # the size of the sliding window   #筛选freq的列表长度
 windowSize = 40
 # the magnifaction factor
-factor = 5
+factor = -1
 # the fps used for the bandpass (use -1 for input video fps) #筛选freq的范围:[0,fps/2]
 fpsForBandPass = 60
 # low ideal filter
-lowFreq = 0
+lowFreq = 1.5
 # high ideal filter
-highFreq = 1.5
+highFreq = 20
 
 eyeFreqFilter(vidIn,vidOut,coeffOut,windowSize,factor,lowFreq,highFreq,fpsForBandPass,drawOnce)

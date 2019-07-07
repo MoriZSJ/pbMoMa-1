@@ -88,7 +88,7 @@ def eyeTrack(video,center):
 def drawPath(center,outPath,tck):
     #print("center: "+str(center))
     # white background
-    rows, cols = [640,360]
+    rows, cols = [1000,1000]
     img = np.zeros((cols,rows,3), np.uint8)
     img.fill(255)
 
@@ -106,10 +106,10 @@ def drawPath(center,outPath,tck):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture("mag_Videos/btfy/1.mp4")
-    outPath  = "mag_Videos/btfy/tck1/btfy1.jpg" 
+    video = cv2.VideoCapture("mag_Videos/mydata/btfy/btfy1.mp4")
+    outPath  = "mag_Videos/mydata/btfy/Btfy.jpg" 
     # thickness of path
-    tck = 1
+    tck = 2
     #center locations
     center = []
 

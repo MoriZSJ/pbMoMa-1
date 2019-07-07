@@ -39,6 +39,6 @@ def img_similarity(img1_path,img2_path):
 
 if __name__ == '__main__':
 
-    img1_path="Path/11.jpg"
-    img2_path="Truth/11.jpg"
+    img1_path="Truth_Patches/11-mag.jpg"
+    img2_path="mag_Videos/btfy/btfymag1.jpg"
     similary=img_similarity(img1_path,img2_path)

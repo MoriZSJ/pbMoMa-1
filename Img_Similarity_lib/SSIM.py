@@ -17,4 +17,4 @@ class CompareImage():
 
 
 compare_image = CompareImage()
-compare_image.compare_image("Truth/11.jpg", "Path/11tk_3amp.jpg")
+compare_image.compare_image("mag_Videos/btfy/btfymag1.jpg", "Truth_Patches/1.jpg")
