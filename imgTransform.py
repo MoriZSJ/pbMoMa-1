@@ -2,8 +2,10 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = np.array(cv2.imread("mag_Videos/mydata/btfy/Btfy.jpg"))
-saveImg = "mag_Videos/mydata/btfy/magBtfy.jpg"
+# img = np.array(cv2.imread("mag_Videos/tri/tri1.jpg"))
+img = np.array(cv2.imread("magVid_matlab/tri/mattri1.jpg"))
+# saveImg = "mag_Videos/tri/magtri1.jpg"
+saveImg = "magVid_matlab/tri/magmattri1.jpg"
 
 
 # 1. locate path patch
@@ -12,9 +14,8 @@ y, x, z = np.where(img==[0,0,0])
 #print(x,y)
 center = [int(np.mean(x)),int(np.mean(y))]
 print(center)
-
 # =======locate origin patch
-patchsize = 20
+patchsize = 33
 p1 = [center[0]-patchsize,center[1]-patchsize]
 p2 = [center[0]+patchsize,center[1]-patchsize]
 p3 = [center[0]-patchsize,center[1]+patchsize]
@@ -25,13 +26,12 @@ print(p1,p2,p3,p4)
 transsize = 320
 pts2 = np.float32([[0,0],[transsize,0],[0,transsize],[transsize,transsize]])
 
-
 # # 2. enlarge patch
 # # =======find center of ROI
-# center = [850,200]
+# center = [440,910]
 
 # # =======locate origin patch
-# patchsize = 150
+# patchsize = 160
 # p1 = [center[0]-patchsize,center[1]-patchsize]
 # p2 = [center[0]+patchsize,center[1]-patchsize]
 # p3 = [center[0]-patchsize,center[1]+patchsize]
@@ -51,7 +51,9 @@ plt.subplot(121)
 plt.imshow(img)
 plt.subplot(122)
 plt.imshow(res)
-plt.show()
+plt.show(block=False)
+plt.pause(2)
+plt.close()
 cv2.imwrite(saveImg,res)
 
 

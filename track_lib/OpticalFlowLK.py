@@ -1,19 +1,19 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture("mag_Videos/mydata/btfy/btfy1.mp4")
-imgPath = "mag_Videos/mydata/btfy/OFbtfy.jpg"
+cap = cv2.VideoCapture("mag_Videos/btfy/1.mp4")
+imgPath = "mag_Videos/btfy/OFbtfy.jpg"
 
 # ShiTomasi corner detection的参数
-feature_params = dict(maxCorners=100,
-                      qualityLevel=0.1,
-                      minDistance=10,
-                      blockSize=15)
+feature_params = dict(maxCorners=40,
+                      qualityLevel=0.2,
+                      minDistance=40,
+                      blockSize=30)
 # 光流法参数
 # maxLevel 未使用的图像金字塔层数
 lk_params = dict(winSize=(10,10),
-                 maxLevel=3,
-                 criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+                 maxLevel=1,
+                 criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 5, 0.01))
 
 # 创建随机生成的颜色
 color = np.random.randint(0, 255, (100, 3))

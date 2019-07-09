@@ -15,8 +15,8 @@ def img_to_sig(arr):
     return sig
 
 
-img1='mag_Videos/square/square1.jpg'
-img2='Truth_Patches/6.jpg'
+img1='mag_Videos/tri/magtri2.jpg'
+img2='Truth_Patches/13.jpg'
 
 im1=cv2.imread(img1,0)
 im2=cv2.imread(img2,0)
@@ -30,7 +30,7 @@ h2 = cv2.calcHist([im2],[0],None,[256],[0,256])
 # print(h1.sum())
 sig1 = img_to_sig(h1)
 sig2 = img_to_sig(h2)
-print(sig2)
+# print(sig1)
 
 dis,_,_ = cv2.EMD(sig1,sig2,cv2.DIST_L2)
 

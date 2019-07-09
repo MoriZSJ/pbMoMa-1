@@ -88,11 +88,11 @@ def eyeTrack(video,center):
 def drawPath(center,outPath,tck):
     #print("center: "+str(center))
     # white background
-    rows, cols = [1000,1000]
+    rows, cols = [640,360]
     img = np.zeros((cols,rows,3), np.uint8)
     img.fill(255)
 
-    #draw path
+#draw path
     for i in range(len(center)-1):
         cv2.line(img,center[i],center[i+1],(0,0,0),tck)
 
@@ -106,10 +106,14 @@ def drawPath(center,outPath,tck):
 if __name__ == '__main__' :
     
     # Read video
-    video = cv2.VideoCapture("mag_Videos/mydata/btfy/btfy1.mp4")
-    outPath  = "mag_Videos/mydata/btfy/Btfy.jpg" 
+    video = cv2.VideoCapture("mag_Videos/tri/1.mp4")
+    # video = cv2.VideoCapture("magVid_matlab/tri/tri1.mp4")
+
+    outPath  = "mag_Videos/tri/test.jpg" 
+    # outPath  = "magVid_matlab/tri/mattri1.jpg" 
+
     # thickness of path
-    tck = 2
+    tck = 1
     #center locations
     center = []
 
